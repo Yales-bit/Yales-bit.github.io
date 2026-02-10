@@ -1,35 +1,100 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+/* style.css */
+
+/* Réinitialisation et style de base */
+* {
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    box-sizing: border-box;
 }
-header, footer {
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    max-width: 960px; /* Largeur maximale pour un aspect plus pro */
+    margin: 0 auto; /* Centrer le contenu */
+}
+
+/* En-tête */
+header {
     text-align: center;
-    background: #333;
-    color: #fff;
-    padding: 10px;
+    padding: 40px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
 }
-.gallery {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
+
+header h1 {
+    font-size: 2.5em;
+    font-weight: 300;
+    color: #111;
+    margin-bottom: 10px;
 }
-.card {
-    background: white;
-    padding: 20px;
+
+header p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Section Projets */
+.projets h2 {
+    font-size: 1.8em;
+    font-weight: 400;
+    color: #222;
+    margin-bottom: 25px;
+    border-left: 4px solid #007bff;
+    padding-left: 15px;
+}
+
+/* Carte Projet */
+.projet {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 20px;
     border-radius: 8px;
-    width: 250px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
 }
+
+.projet:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.projet h3 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.projet p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Bouton */
 .button {
     display: inline-block;
-    background: #007bff;
-    color: white;
-    padding: 8px 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Pied de page */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #888;
+    font-size: 0.9em;
 }
