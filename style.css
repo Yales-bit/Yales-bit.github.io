@@ -26,25 +26,56 @@ body {
 }
 
 /* Permet un défilement doux quand on clique sur le sommaire */
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 
-/* Conteneur principal pour centrer le site */
+/* --- 2. LAYOUT ET CONTENEURS --- */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 30px;
 }
 
-/* --- 2. PAGE D'ACCUEIL (VITRINE) --- */
-header {
+/* Navigation de retour */
+.nav-back {
+    padding: 20px 0;
+    font-size: 0.9rem;
+}
+
+.nav-back a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-back a:hover {
+    color: var(--text-main);
+}
+
+.nav-back span {
+    margin-right: 5px;
+}
+
+/* --- 3. PAGE D'ACCUEIL (VITRINE) --- */
+header.home-header {
     padding: 80px 0 40px;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 40px;
     text-align: center;
 }
 
-header h1 { font-size: 3rem; font-weight: 600; letter-spacing: -1px; margin-bottom: 10px; }
-header p { font-size: 1.2rem; color: var(--text-muted); }
+header.home-header h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+header.home-header p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
 
 /* Grille des projets (Accueil) */
 .projets-container {
@@ -66,11 +97,19 @@ header p { font-size: 1.2rem; color: var(--text-muted); }
 
 .projet:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.projet h3 { font-size: 1.4rem; margin-bottom: 10px; }
-.projet p { color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
+.projet h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.projet p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
 
 .button {
     display: inline-block;
@@ -84,9 +123,28 @@ header p { font-size: 1.2rem; color: var(--text-muted); }
     width: fit-content;
 }
 
-.button:hover { background-color: var(--accent); }
+.button:hover {
+    background-color: var(--accent);
+}
 
-/* --- 3. PAGE PROJET (AVEC SIDEBAR) --- */
+/* --- 4. PAGE PROJET (AVEC SIDEBAR) --- */
+/* En-tête du projet (titre et date) */
+.project-header {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.project-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.project-header .meta {
+    color: var(--text-muted);
+}
+
 /* Layout principal pour mettre le sommaire à côté du texte */
 .project-detail {
     display: flex;
@@ -99,8 +157,9 @@ header p { font-size: 1.2rem; color: var(--text-muted); }
 .sidebar {
     width: 250px;
     flex-shrink: 0;
-    position: sticky; /* Garde le sommaire à l'écran au défilement */
-    top: 40px; 
+    position: sticky;
+    /* Garde le sommaire à l'écran au défilement */
+    top: 40px;
 }
 
 .toc h4 {
@@ -111,8 +170,14 @@ header p { font-size: 1.2rem; color: var(--text-muted); }
     margin-bottom: 15px;
 }
 
-.toc ul { list-style: none; }
-.toc li { margin-bottom: 10px; }
+.toc ul {
+    list-style: none;
+}
+
+.toc li {
+    margin-bottom: 10px;
+}
+
 .toc a {
     text-decoration: none;
     color: var(--text-muted);
@@ -120,48 +185,70 @@ header p { font-size: 1.2rem; color: var(--text-muted); }
     transition: all 0.2s;
     display: block;
     padding-left: 10px;
-    border-left: 2px solid transparent; /* Ligne invisible par défaut */
+    border-left: 2px solid transparent;
+    /* Ligne invisible par défaut */
 }
 
 .toc a:hover {
     color: var(--text-main);
-    border-left-color: var(--text-main); /* Fait apparaitre une ligne noire au survol */
+    border-left-color: var(--text-main);
+    /* Fait apparaitre une ligne noire au survol */
 }
 
 /* Le Corps du Texte */
 .content {
-    flex: 1; /* Prend tout l'espace restant */
+    flex: 1;
+    /* Prend tout l'espace restant */
     max-width: 800px;
 }
 
-.content section { margin-bottom: 60px; }
-.content h2 { 
-    font-size: 2rem; 
-    margin-bottom: 20px; 
-    border-bottom: 1px solid var(--border-color); 
-    padding-bottom: 10px; 
+.content section {
+    margin-bottom: 60px;
 }
-.content h3 { font-size: 1.4rem; margin: 30px 0 15px; }
-.content p { margin-bottom: 15px; color: #333; }
-.content ul { margin: 0 0 20px 20px; }
-.content li { margin-bottom: 8px; }
+
+.content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.content h3 {
+    font-size: 1.4rem;
+    margin: 30px 0 15px;
+}
+
+.content p {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.content ul {
+    margin: 0 0 20px 20px;
+}
+
+.content li {
+    margin-bottom: 8px;
+}
 
 /* --- 4. FOOTER --- */
-footer { 
-    text-align: center; 
-    padding: 40px 0; 
-    border-top: 1px solid var(--border-color); 
-    color: var(--text-muted); 
-    margin-top: 60px; 
+footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    margin-top: 60px;
 }
 
 /* --- 5. RESPONSIVE MOBILE --- */
 @media (max-width: 850px) {
+
     /* Sur petit écran, le sommaire passe au-dessus du texte */
     .project-detail {
         flex-direction: column;
         gap: 30px;
     }
+
     .sidebar {
         position: static;
         width: 100%;

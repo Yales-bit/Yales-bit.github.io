@@ -1,117 +1,181 @@
-<main class="container project-detail">
-    <aside class="sidebar">
-        <nav class="toc">
-            <h4>Sommaire</h4>
-            <ul>
-                <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#tvc">Thrust Vector Control</a></li>
-                <li><a href="#flight-computer">Flight Computer</a></li>
-                <li><a href="#code">Code and Algorithm</a></li>
-                <li><a href="#attitude">Attitude Estimator</a></li>
-            </ul>
-        </nav>
-    </aside>
+<!DOCTYPE html>
+<html lang="fr">
 
-    <article class="content">
-        
-        <header style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-            <h1>Rapport TVC rocket</h1>
-            <p style="color: #666;">Par [Prénom Nom] — Février 2026</p>
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model-Rocket | Portfolio</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
 
-        <section id="introduction">
-            <h2>1. Introduction</h2>
-            <p><strong>[à faire]</strong></p>
-        </section>
+<body>
 
-        <section id="tvc">
-            <h2>2. Thrust Vector Control</h2>
-            <p>La stabilité est un problème majeur lors de la conception de fusées, et cela quelle que soit la taille. En effet, la fusée se propulse sur le même principe qu'un ballon qui se dégonfle, à la différence de celui-ci on essaie d'orienter toute la poussée vers le haut.</p>
-            
-            <p>Il existe plusieurs méthodes pour stabiliser une fusée. Il y a tout d'abord les méthodes passives qui se basent uniquement sur les caractéristiques aérodynamiques de la fusée (centre de pression sous le centre de gravité pour que le couple dû à l'air crée une boucle de rétroaction négative), en pratique il suffit de mettre des ailerons au bout de la fusée.</p>
-            
-            <p>Il y a ensuite les méthodes actives, où la fusée est constamment stabilisée par un système et une boucle de contrôle. J'ai utilisé une de ces méthodes appelée <em>Thrust Vector Control</em> (TVC), elle consiste à orienter la poussée du moteur pour corriger les erreurs d'alignement (ici vertical).</p>
+    <nav class="container nav-back">
+        <a href="../index.html"><span>←</span> Retour à l'accueil</a>
+    </nav>
 
-            <h3>Partie Mécanique</h3>
-            <p>Le moteur est orienté grâce à un gimbal et deux servo-moteurs. C'est une des configurations les plus courantes. La conception s'est faite en plusieurs itérations. La CAO</p>
-            <p><strong>[à terminer]</strong></p>
-        </section>
+    <header class="container project-header">
+        <h1>Rapport TVC rocket</h1>
+        <p class="meta">Par Jules — Février 2026</p>
+    </header>
 
-        <section id="flight-computer">
-            <h2>3. Flight Computer</h2>
-            <p>L'ordinateur de vol est une partie centrale, il permet de :</p>
-            <ul>
-                <li>Contrôler les servo pour le TVC Mount</li>
-                <li>Gérer les différents états de vol</li>
-                <li>Lire les données des capteurs, calculer les caractéristiques de la fusée (attitude, altitude, vitesse, accélération, etc.)</li>
-                <li>Logger les données de vol</li>
-            </ul>
-            <p>Détaillons ensuite chaque sous-partie ainsi que leurs choix et difficultés associés.</p>
+    <main class="container project-detail">
+        <aside class="sidebar">
+            <nav class="toc">
+                <h4>Sommaire</h4>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#tvc">Thrust Vector Control</a></li>
+                    <li><a href="#flight-computer">Flight Computer</a></li>
+                    <li><a href="#code">Code and Algorithm</a></li>
+                    <li><a href="#attitude">Attitude Estimator</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-            <h3>3.1 Description</h3>
-            
-            <h4>Microcontrôleur</h4>
-            <p>Un ESP32 a été choisi comme microcontrôleur car il n'est pas cher, rapide et a un grand nombre de connexions.</p>
+        <article class="content">
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p><strong>[à faire]</strong></p>
+            </section>
 
-            <h4>Puissance</h4>
-            <p>Pour la puissance, l'alimentation se fait en 9V. Lors des premiers tests celle-ci se faisait grâce à une pile 9V, mais cette solution a été remplacée par une batterie LiPo pour avoir plus de courant ainsi que la possibilité de recharge. Cette tension est ensuite abaissée à 5V grâce à un régulateur linéaire (LM7805). Cette tension 5V alimente presque tous les composants.</p>
+            <section id="tvc">
+                <h2>2. Thrust Vector Control</h2>
+                <p>La stabilité est un problème majeur lors de la conception de fusées, et cela quelle que soit la
+                    taille. En effet, la fusée se propulse sur le même principe qu'un ballon qui se dégonfle, à la
+                    différence de celui-ci on essaie d'orienter toute la poussée vers le haut.</p>
 
-            <h4>Données de vol</h4>
-            <p>Pour obtenir la position dans l'espace de la fusée il me fallait un IMU (Inertial Measurement Unit), j'ai choisi le <strong>MPU6050</strong> qui a 6 DoF, trois pour les vitesses angulaires et trois pour les accélérations. Dans de prochaines itérations il faudrait peut-être choisir un composant avec plus de "degrés de liberté", notamment un magnétomètre. Le but étant de fusionner les données des différents capteurs dans un filtre complémentaire, cela permettrait par exemple de bien mieux contrôler la dérive des gyroscopes (cf. Partie Attitude Estimator).</p>
+                <p>Il existe plusieurs méthodes pour stabiliser une fusée. Il y a tout d'abord les méthodes passives qui
+                    se basent uniquement sur les caractéristiques aérodynamiques de la fusée (centre de pression sous le
+                    centre de gravité pour que le couple dû à l'air crée une boucle de rétroaction négative), en
+                    pratique il suffit de mettre des ailerons au bout de la fusée.</p>
 
-            <p>Le capteur barométrique BMP280 permet de connaître la pression atmosphérique, avec laquelle nous pouvons retrouver l'altitude. Cette méthode est assez précise car elle permet de connaître au mètre près la différence d'altitude entre deux endroits, dans mon cas le sol et la fusée.</p>
+                <p>Il y a ensuite les méthodes actives, où la fusée est constamment stabilisée par un système et une
+                    boucle de contrôle. J'ai utilisé une de ces méthodes appelée <em>Thrust Vector Control</em> (TVC),
+                    elle consiste à orienter la poussée du moteur pour corriger les erreurs d'alignement (ici vertical).
+                </p>
 
-            <h3>3.2 Schematics</h3>
-            <p><em>(Espace réservé pour vos schémas)</em></p>
+                <h3>Partie Mécanique</h3>
+                <p>Le moteur est orienté grâce à un gimbal et deux servo-moteurs. C'est une des configurations les plus
+                    courantes. La conception s'est faite en plusieurs itérations. La CAO</p>
+                <p><strong>[à terminer]</strong></p>
+            </section>
 
-            <h3>3.3 Routing</h3>
-            <p><em>(Espace réservé pour votre routage PCB)</em></p>
-        </section>
+            <section id="flight-computer">
+                <h2>3. Flight Computer</h2>
+                <p>L'ordinateur de vol est une partie centrale, il permet de :</p>
+                <ul>
+                    <li>Contrôler les servo pour le TVC Mount</li>
+                    <li>Gérer les différents états de vol</li>
+                    <li>Lire les données des capteurs, calculer les caractéristiques de la fusée (attitude, altitude,
+                        vitesse, accélération, etc.)</li>
+                    <li>Logger les données de vol</li>
+                </ul>
+                <p>Détaillons ensuite chaque sous-partie ainsi que leurs choix et difficultés associés.</p>
 
-        <section id="code">
-            <h2>4. Code and Algorithm</h2>
-            
-            <h3>4.1 Acquisition des données</h3>
-            <p><em>(Contenu à venir)</em></p>
+                <h3>3.1 Description</h3>
 
-            <h3>4.2 State Machine</h3>
-            <p>Le code se décompose en 6 états :</p>
-            <ul>
-                <li><strong>État 1 : Au Sol</strong>, passe à l'état suivant si l'accélération en Z est supérieure à un seuil (20 m/s&sup2;) pendant 0,2 s.</li>
-                <li><strong>État 2 : Vol Motorisé</strong>, passe à l'état suivant si l'accélération totale est inférieure à un seuil (2 m/s&sup2;) pendant 0,5 s.</li>
-                <li><strong>État 3 : Vol Non Motorisé</strong>, passe à l'état suivant si l'altitude décroît, c'est-à-dire z<sub>t</sub> &lt; z<sub>t-1</sub>.</li>
-                <li><strong>État 4 : Descente en chute libre</strong>, passe à l'état suivant si <strong>[à terminer]</strong></li>
-                <li><strong>État 5 : Descente en chute contrôlée (parachute)</strong>, passe à l'état suivant si z &lt; 5m pendant 3 s.</li>
-                <li><strong>État 6 : Atterri</strong>, état final.</li>
-            </ul>
+                <h4>Microcontrôleur</h4>
+                <p>Un ESP32 a été choisi comme microcontrôleur car il n'est pas cher, rapide et a un grand nombre de
+                    connexions.</p>
 
-            <h3>4.3 Logging</h3>
-            <p><strong>[à faire]</strong></p>
-        </section>
+                <h4>Puissance</h4>
+                <p>Pour la puissance, l'alimentation se fait en 9V. Lors des premiers tests celle-ci se faisait grâce à
+                    une pile 9V, mais cette solution a été remplacée par une batterie LiPo pour avoir plus de courant
+                    ainsi que la possibilité de recharge. Cette tension est ensuite abaissée à 5V grâce à un régulateur
+                    linéaire (LM7805). Cette tension 5V alimente presque tous les composants.</p>
 
-        <section id="attitude">
-            <h2>5. Attitude Estimator</h2>
-            <p>Les données de l'accéléromètre permettent de connaître l'orientation d'un objet en se basant sur une accélération de référence qui est ici la pesanteur. Cependant, lors de la phase ascensionnelle de la fusée, qui est la phase où il est vital de connaître l'orientation, la fusée subit une très grande accélération verticale qui masque la pesanteur. Ce qui rend l'utilisation de ces données impossible. Par conséquent, nous n'utiliserons que les données issues du gyroscope pour l'estimation de l'attitude.</p>
+                <h4>Données de vol</h4>
+                <p>Pour obtenir la position dans l'espace de la fusée il me fallait un IMU (Inertial Measurement Unit),
+                    j'ai choisi le <strong>MPU6050</strong> qui a 6 DoF, trois pour les vitesses angulaires et trois
+                    pour les accélérations. Dans de prochaines itérations il faudrait peut-être choisir un composant
+                    avec plus de "degrés de liberté", notamment un magnétomètre. Le but étant de fusionner les données
+                    des différents capteurs dans un filtre complémentaire, cela permettrait par exemple de bien mieux
+                    contrôler la dérive des gyroscopes (cf. Partie Attitude Estimator).</p>
 
-            <p>Dans un premier temps, je suis parti sur une estimation "naïve", j'accumulais les vitesses angulaires suivant chaque axe. Cette méthode a très vite trouvé ses limites et ne fonctionnait que pour des petits angles sur une courte durée.</p>
+                <p>Le capteur barométrique BMP280 permet de connaître la pression atmosphérique, avec laquelle nous
+                    pouvons retrouver l'altitude. Cette méthode est assez précise car elle permet de connaître au mètre
+                    près la différence d'altitude entre deux endroits, dans mon cas le sol et la fusée.</p>
 
-            <div style="text-align: center; margin: 30px 0; font-family: serif; font-style: italic; font-size: 1.1em;">
-                <p>Roll = &int;<sub>0</sub><sup>t</sup> &omega;<sub>z</sub> dt &approx; &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>z</sub>(t<sub>k</sub>) &Delta;t</p>
-                <p>Yaw = &int;<sub>0</sub><sup>t</sup> &omega;<sub>y</sub> dt &approx; &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>y</sub>(t<sub>k</sub>) &Delta;t</p>
-                <p>Pitch = &int;<sub>0</sub><sup>t</sup> &omega;<sub>x</sub> dt &approx; &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>x</sub>(t<sub>k</sub>) &Delta;t</p>
-            </div>
+                <h3>3.2 Schematics</h3>
+                <p><em>(Espace réservé pour vos schémas)</em></p>
 
-            <h3>Quaternions</h3>
-            <p>Afin d'obtenir une meilleure précision et fiabilité je me suis naturellement tourné vers les quaternions.</p>
-            <p><strong>[à terminer]</strong></p>
+                <h3>3.3 Routing</h3>
+                <p><em>(Espace réservé pour votre routage PCB)</em></p>
+            </section>
 
-            <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
-            
-            <h4>Notes :</h4>
-            <ul>
-                <li>Voici mes essais et expérimentations avec les quaternions : <a href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt GitHub</a></li>
-                <li>Pour faire ce qui précède je me suis grandement aidé de l'article <em>Quaternion kinematics for the error-state Kalman filter</em> de Joan Solà.</li>
-            </ul>
-        </section>
-    </article>
-</main>
+            <section id="code">
+                <h2>4. Code and Algorithm</h2>
+
+                <h3>4.1 Acquisition des données</h3>
+                <p><em>(Contenu à venir)</em></p>
+
+                <h3>4.2 State Machine</h3>
+                <p>Le code se décompose en 6 états :</p>
+                <ul>
+                    <li><strong>État 1 : Au Sol</strong>, passe à l'état suivant si l'accélération en Z est supérieure à
+                        un seuil (20 m/s&sup2;) pendant 0,2 s.</li>
+                    <li><strong>État 2 : Vol Motorisé</strong>, passe à l'état suivant si l'accélération totale est
+                        inférieure à un seuil (2 m/s&sup2;) pendant 0,5 s.</li>
+                    <li><strong>État 3 : Vol Non Motorisé</strong>, passe à l'état suivant si l'altitude décroît,
+                        c'est-à-dire z<sub>t</sub> &lt; z<sub>t-1</sub>.</li>
+                    <li><strong>État 4 : Descente en chute libre</strong>, passe à l'état suivant si <strong>[à
+                            terminer]</strong></li>
+                    <li><strong>État 5 : Descente en chute contrôlée (parachute)</strong>, passe à l'état suivant si z
+                        &lt; 5m pendant 3 s.</li>
+                    <li><strong>État 6 : Atterri</strong>, état final.</li>
+                </ul>
+
+                <h3>4.3 Logging</h3>
+                <p><strong>[à faire]</strong></p>
+            </section>
+
+            <section id="attitude">
+                <h2>5. Attitude Estimator</h2>
+                <p>Les données de l'accéléromètre permettent de connaître l'orientation d'un objet en se basant sur une
+                    accélération de référence qui est ici la pesanteur. Cependant, lors de la phase ascensionnelle de la
+                    fusée, qui est la phase où il est vital de connaître l'orientation, la fusée subit une très grande
+                    accélération verticale qui masque la pesanteur. Ce qui rend l'utilisation de ces données impossible.
+                    Par conséquent, nous n'utiliserons que les données issues du gyroscope pour l'estimation de
+                    l'attitude.</p>
+
+                <p>Dans un premier temps, je suis parti sur une estimation "naïve", j'accumulais les vitesses angulaires
+                    suivant chaque axe. Cette méthode a très vite trouvé ses limites et ne fonctionnait que pour des
+                    petits angles sur une courte durée.</p>
+
+                <div
+                    style="text-align: center; margin: 30px 0; font-family: serif; font-style: italic; font-size: 1.1em;">
+                    <p>Roll = &int;<sub>0</sub><sup>t</sup> &omega;<sub>z</sub> dt &approx;
+                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>z</sub>(t<sub>k</sub>) &Delta;t</p>
+                    <p>Yaw = &int;<sub>0</sub><sup>t</sup> &omega;<sub>y</sub> dt &approx;
+                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>y</sub>(t<sub>k</sub>) &Delta;t</p>
+                    <p>Pitch = &int;<sub>0</sub><sup>t</sup> &omega;<sub>x</sub> dt &approx;
+                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>x</sub>(t<sub>k</sub>) &Delta;t</p>
+                </div>
+
+                <h3>Quaternions</h3>
+                <p>Afin d'obtenir une meilleure précision et fiabilité je me suis naturellement tourné vers les
+                    quaternions.</p>
+                <p><strong>[à terminer]</strong></p>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+
+                <h4>Notes :</h4>
+                <ul>
+                    <li>Voici mes essais et expérimentations avec les quaternions : <a
+                            href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt
+                            GitHub</a></li>
+                    <li>Pour faire ce qui précède je me suis grandement aidé de l'article <em>Quaternion kinematics for
+                            the error-state Kalman filter</em> de Joan Solà.</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+
+    <footer class="container">
+        <p>© 2026 Yales - Portfolio personnel</p>
+    </footer>
+
+</body>
+
+</html>
