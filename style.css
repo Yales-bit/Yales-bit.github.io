@@ -258,3 +258,27 @@ footer {
         border: 1px solid var(--border-color);
     }
 }
+
+/* --- IMAGES ET FIGURES --- */
+
+/* L'image s'adapte à la largeur de son conteneur sans jamais le dépasser */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Ajoute des bords légèrement arrondis pour coller à ton design */
+    display: block; /* Évite les petits espaces blancs sous l'image */
+}
+
+/* Style pour les blocs figure */
+.content figure {
+    margin: 40px 0; /* Ajoute de l'espace au-dessus et en dessous */
+    text-align: center; /* Centre l'image et la légende */
+}
+
+/* Style pour la légende */
+.content figcaption {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--text-muted); /* Utilise le gris clair défini dans ton CSS */
+    font-style: italic;
+}
