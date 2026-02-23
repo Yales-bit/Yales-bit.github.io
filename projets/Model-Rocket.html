@@ -57,8 +57,38 @@
 
                 <h3>Partie Mécanique</h3>
                 <p>Le moteur est orienté grâce à un gimbal et deux servo-moteurs. C'est une des configurations les plus
-                    courantes. La conception s'est faite en plusieurs itérations. La CAO</p>
+                    courantes. La conception s'est faite en plusieurs itérations. La CAO a été faites dans Onshape. Le design 
+                    se base sur deux blocs en pivot l'un par rapport à l'autre, ce qui est équivalent à une rotule. Le système 
+                    permet ainsi au tube qui maintient le moteur de pivoter sur toute une demi-sphère (voir figure). Toutes les 
+                    pièces sont imprimées en PLA, pour simplifier et accélérer la conception.
+                    Ce choix a un impact direct sur la rigidité du système. Pour de prochaines améliorations, je pourrais utiliser
+                    plus de pièces standarisées et en métal.
+
+                </p>
+
+
+                <figure>
+                    <img src="../images/CAO_1.png" alt="CAO du gimbal">
+                    <figcaption>Figure 1 : CAO du Gimbal pour le système TVC.</figcaption>
+                </figure>
+
+                <p>Les liaisons pivots se font grâce à des petits axes imprimés en PLA. Cette solution n'est vraiment pas optimale 
+                    pour plusieurs raisons. J'ai choisi d'imprimer les axes dans le sens axial, ce qui entraine une très 
+                    faible résistance au cisaillement mais assure que la pièce est bien cylindrique et a les bonnes cotes. 
+                    Je compte sur le fait que les efforts transmis seront faibles à la fois pour la résistance 
+                    des pièces et pour les frottements. J'ai fait ce choix pour aller vite et pour simplifier le système au maximum. 
+                    
+                </p>
+                <p>
+                    La transmission des efforts du servomoteurs se fait grâce à des biellettes et des axes qui ont aussi été imprimées.
+                    La transmission ne se fait pas très bien à cause des frottements et du manque de rigidité. 
+                </p>
+
+        
+
                 <p><strong>[à terminer]</strong></p>
+
+                
             </section>
 
             <section id="flight-computer">
@@ -98,18 +128,18 @@
                     pouvons retrouver l'altitude. Cette méthode est assez précise car elle permet de connaître au mètre
                     près la différence d'altitude entre deux endroits, dans mon cas le sol et la fusée.</p>
 
-                <h3>3.2 Schematics</h3>
+                <h3>3.2 Schématique</h3>
                 <p><em>(Espace réservé pour les schémas)</em></p>
                 <figure>
                     <img src="../images/schema_circuit.png" alt="Schéma électrique du Flight Computer">
-                    <figcaption>Figure 1 : Schéma de câblage de l'ordinateur de vol.</figcaption>
+                    <figcaption>Figure 2 : Schéma de câblage de l'ordinateur de vol.</figcaption>
                 </figure>
 
-                <h3>3.3 Routing</h3>
+                <h3>3.3 Routage</h3>
                 <p><em>(Espace réservé pour votre routage PCB)</em></p>
                 <figure>
                     <img src="../images/Routage_PCB.png" alt="Routage du Flight Computer">
-                    <figcaption>Figure 1 : Schéma du routage de l'ordinateur de vol.</figcaption>
+                    <figcaption>Figure 3 : Schéma du routage de l'ordinateur de vol.</figcaption>
                 </figure>
 
             </section>
