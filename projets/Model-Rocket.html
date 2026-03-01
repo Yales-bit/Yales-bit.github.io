@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model-Rocket | Portfolio</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -57,11 +59,15 @@
 
                 <h3>Partie Mécanique</h3>
                 <p>Le moteur est orienté grâce à un gimbal et deux servo-moteurs. C'est une des configurations les plus
-                    courantes. La conception s'est faite en plusieurs itérations. La CAO a été faites dans Onshape. Le design 
-                    se base sur deux blocs en pivot l'un par rapport à l'autre, ce qui est équivalent à une rotule. Le système 
-                    permet ainsi au tube qui maintient le moteur de pivoter sur toute une demi-sphère (voir figure). Toutes les 
+                    courantes. La conception s'est faite en plusieurs itérations. La CAO a été faites dans Onshape. Le
+                    design
+                    se base sur deux blocs en pivot l'un par rapport à l'autre, ce qui est équivalent à une rotule. Le
+                    système
+                    permet ainsi au tube qui maintient le moteur de pivoter sur toute une demi-sphère (voir figure).
+                    Toutes les
                     pièces sont imprimées en PLA, pour simplifier et accélérer la conception.
-                    Ce choix a un impact direct sur la rigidité du système. Pour de prochaines améliorations, je pourrais utiliser
+                    Ce choix a un impact direct sur la rigidité du système. Pour de prochaines améliorations, je
+                    pourrais utiliser
                     plus de pièces standarisées et en métal.
 
                 </p>
@@ -72,23 +78,27 @@
                     <figcaption>Figure 1 : CAO du Gimbal pour le système TVC.</figcaption>
                 </figure>
 
-                <p>Les liaisons pivots se font grâce à des petits axes imprimés en PLA. Cette solution n'est vraiment pas optimale 
-                    pour plusieurs raisons. J'ai choisi d'imprimer les axes dans le sens axial, ce qui entraine une très 
-                    faible résistance au cisaillement mais assure que la pièce est bien cylindrique et a les bonnes cotes. 
-                    Je compte sur le fait que les efforts transmis seront faibles à la fois pour la résistance 
-                    des pièces et pour les frottements. J'ai fait ce choix pour aller vite et pour simplifier le système au maximum. 
-                    
+                <p>Les liaisons pivots se font grâce à des petits axes imprimés en PLA. Cette solution n'est vraiment
+                    pas optimale
+                    pour plusieurs raisons. Les axes sont imprimés dans le sens axial, ce qui entraine une très
+                    faible résistance au cisaillement mais assure que la pièce est bien cylindrique et a les bonnes
+                    cotes. Après avoir effectué des tests, j'en ai conclu que ce compromis semble acceptable.
+                    Je compte sur le fait que les efforts transmis seront faibles à la fois pour la résistance
+                    des pièces et pour les frottements. Ce choix a été fait pour aller vite et pour simplifier le système
+                    au maximum.
+
                 </p>
                 <p>
-                    La transmission des efforts du servomoteurs se fait grâce à des biellettes et des axes qui ont aussi été imprimées.
-                    La transmission ne se fait pas très bien à cause des frottements et du manque de rigidité. 
+                    La transmission des efforts du servomoteurs se fait grâce à des biellettes et des axes qui ont aussi
+                    été imprimées.
+                    La transmission ne se fait pas très bien à cause des frottements et du manque de rigidité.
                 </p>
 
-        
+
 
                 <p><strong>[à terminer]</strong></p>
 
-                
+
             </section>
 
             <section id="flight-computer">
@@ -102,7 +112,8 @@
                     <li>Logger les données de vol</li>
                 </ul>
                 <p>Détaillons ensuite chaque sous-partie ainsi que leurs choix et difficultés associés.</p>
-                <p>La conception du PCB pour l'ordinateur de vol a été faite grâce à KiCad, et sa fabrication grâce à JLCPCB.</p>
+                <p>La conception du PCB pour l'ordinateur de vol a été faite grâce à KiCad, et sa fabrication grâce à
+                    JLCPCB.</p>
 
                 <h3>3.1 Description</h3>
 
@@ -129,14 +140,14 @@
                     près la différence d'altitude entre deux endroits, dans mon cas le sol et la fusée.</p>
 
                 <h3>3.2 Schématique</h3>
-                <p><em>(Espace réservé pour les schémas)</em></p>
+    
                 <figure>
                     <img src="../images/schema_circuit.png" alt="Schéma électrique du Flight Computer">
                     <figcaption>Figure 2 : Schéma de câblage de l'ordinateur de vol.</figcaption>
                 </figure>
 
                 <h3>3.3 Routage</h3>
-                <p><em>(Espace réservé pour votre routage PCB)</em></p>
+                
                 <figure>
                     <img src="../images/Routage_PCB.png" alt="Routage du Flight Computer">
                     <figcaption>Figure 3 : Schéma du routage de l'ordinateur de vol.</figcaption>
@@ -168,6 +179,120 @@
 
                 <h3>4.3 Logging</h3>
                 <p><strong>[à faire]</strong></p>
+                <h3>4.4 Boucle de contrôle</h3>
+                <p>
+                    La boucle de contrôle est une des parties qui m'a donné le plus de fil à retordre. J'ai mis beaucoup
+                    de temps
+                    avant de trouver les gains de la boucle PID. Il y avait plusieurs approches pour régler le
+                    correcteur.
+                    Les approches plus empiriques et celles plus analytiques. Commençons par les empiriques. La méthode
+                    de Ziegler Nichols
+                    est assez répendue, voici rapidement en quoi elle consiste : premièrement on désactiver les actions
+                    intégrale (I) et dérivée (D),
+                    puis on augmente le gain proportionnel Kp​ jusqu’à ce que le système oscille de manière stable (on
+                    note ce gain Ku​
+                    et la période d’oscillation Tu​). Ensuite, selon le type de correcteur souhaité (P, PI ou PID), on
+                    calcule Kp​, Ti
+                    (temps intégral) et Td​ (temps dérivé) à partir de formules données par Ziegler et Nichols.
+                </p>
+                <p>
+                    Cette méthode a plusieurs inconvénients, notamment elle nécessite beaucoup de tests afin de tuner
+                    les paramètres,
+                    c'est impossible dans mon cas car pour cela il faudrait que je fasse de nombreux essais statiques.
+                    Les moteurs coutent environ
+                    20€ l'unité et durent une dizaine de seconde, le coût serait exorbitant. Une autre approche pourrait
+                    être de subtituer la poussée
+                    du moteur par une autre poussée, une hélice et un moteur par exemple. Mais il faudrait pour cela
+                    trouver un moteur d'une poussée constante de
+                    20N.
+
+                </p>
+                <p>
+                    Ces problèmes sont communs à toutes les méthodes empiriques que j'ai pu rencontré, c'est pour cela
+                    que je me suis tourné vers les méthodes
+                    plus théoriques.
+                </p>
+                <p>
+                    J'ai longtemps bloqué sur la modélisation du système et notamment trouver la fonction de transfert, qui
+                    m'était nécessaire pour appliquer les connaissance d'automatique que j'avais. Je suis ensuite parti sur 
+                    une autre approche, qui, il me semble, s'appelle le remplacement de pôles. 
+                </p>
+
+                <p>
+                    J'ai d'abord modélisé les efforts qui s'appliquaient sur la fusée.
+                </p>
+
+                <p>
+                    Bilan des Moments :
+                </p>
+
+                <ul>
+                     <li>Moments dus à la force de poussée :
+                        \begin{align*} 
+                        M_f &= l \cdot F_N \\
+                        &= l \cdot F \cdot sin(\alpha)
+                        \end{align*}
+                     </li>
+
+                     <li>Moments dus aux forces aérodynamiques : 
+                    \begin{align*}
+                    M_{aero} &= \vert x_{cg} - x_{cp} \vert \cdot F_{aero}\\
+                            &= \vert x_{cg} - x_{cp} \vert \cdot \frac{1}{2} \rho \, v^2 \, S \, C_x \, sin(\theta)
+                    \end{align*} </li>
+                    
+                </ul>
+                <ul>
+                    Avec : 
+                    <li>\(l\) : la distance entre le centre de gravité et le moteur </li>
+                    <li> \(\alpha\) : l'angle du moteur (TVC Gimbal) avec le corps de la fusée</li>
+                    <li>\(x_{cg}\) : position du centre de gravité </li>
+                    <li>\(x_{cp}\) : position du centre de pression (déterminé grâce au logiciel OpenRocket)</li>
+                    <li>\(\rho\) : densité de l'air </li>
+                    <li>\(v\) : la vitesse </li>
+                    <li>\(S\) : la surface de coupe </li>
+                    <li>\(C_x\) : le coefficient de trainée (déterminé grâce au logiciel OpenRocket) </li>
+                    <li>\(\theta\) : l'angle entre la verticale et le corps de la fusée </li>
+                </ul>
+                <p>
+                    Appliquons la 2nde loi de Newton : 
+                    \begin{align} 
+                    \sum M_{cg} &= I \ddot \theta \\
+                     M_F - M_{aero} &= I \ddot \theta 
+                    \end{align}
+                </p>
+                <p>
+                    Notes : <br>
+                    1) On voit ici que pour une bonne stabilisation passive il faut minimiser la distance \(\vert x_{cg} - x_{cp} \vert\) 
+                    et maximiser la la distance entre le centre de gravité et le moteur \(l\) <br>
+                    2) On cherche \(\alpha\) en fonction de \(\theta\)
+                </p>
+
+                <p>
+                    Pour le correcteur, je vais rester sur un PD pour garder une équation différentielle de degré 2, on pourra toujours par la suite 
+                    rajouter un coef \(K_I = 0,01\) (choisi arbitrairement). <br>
+                    Voici la méthode : je pars de ce que je souhaite, c'est-à-dire que \(\alpha\) soit la commande après régulation. 
+
+                    \begin{align*} 
+                    \alpha &= K_p \, (\theta - consigne) + K_d \, \dot{(\theta - consigne)} \\
+                    &= K_p \, (\theta - 0) + K_d \, \dot{(\theta - 0)}\\
+                    &= K_p \, \theta + K_d \, \dot \theta
+                    \end{align*}
+
+                    On cherche \(K_p\) et \(K_d\), on injecte \(\alpha\) dans l'équation obtenue avec le PFD :
+                    \begin{align*} 
+                    I \, \ddot \theta &= l \, F \, (K_p \, \theta + K_d \, \dot \theta) \\
+                    \Longrightarrow \ddot \theta &= \frac{l \, F \, K_p}{I} \, \theta + \frac{l \, F \, K_d}{I} \, \dot \theta \\
+                    \end{align*}
+                    \[\Longrightarrow \ddot \theta - \frac{l \, F \, K_p}{I} \, \theta - \frac{l \, F \, K_d}{I} \, \dot \theta = 0\]
+
+                    On reconnait l'équation différentielle d'un système du 2nd ordre, avec : <br>
+                    \[ -\frac{l \, F \, K_d}{I} = 2m\omega_0\] \[ -\frac{l \, F \, K_p}{I} = \omega_0^2\]
+                    ce qui donne :<br>
+                    \[ K_d = -\frac{2 \, m \, \omega_0}{l \, F}\] \[ K_p = -\frac{I \, m \, \omega_0^2}{l \, F}\]
+
+                    On choisit un coefficient d'amortissement \(m = 0,707\) et une fréquence propre \(\omega_0 = 15 \, rad/s\). <br>
+                    Après calculs, on trouve \( \boldsymbol{K_p = 1,51} \) et \( \boldsymbol{K_d = 0,14} \)
+                </p>
             </section>
 
             <section id="attitude">
@@ -183,31 +308,66 @@
                     suivant chaque axe. Cette méthode a très vite trouvé ses limites et ne fonctionnait que pour des
                     petits angles sur une courte durée.</p>
 
-                <div
-                    style="text-align: center; margin: 30px 0; font-family: serif; font-style: italic; font-size: 1.1em;">
-                    <p>Roll = &int;<sub>0</sub><sup>t</sup> &omega;<sub>z</sub> dt &approx;
-                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>z</sub>(t<sub>k</sub>) &Delta;t</p>
-                    <p>Yaw = &int;<sub>0</sub><sup>t</sup> &omega;<sub>y</sub> dt &approx;
-                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>y</sub>(t<sub>k</sub>) &Delta;t</p>
-                    <p>Pitch = &int;<sub>0</sub><sup>t</sup> &omega;<sub>x</sub> dt &approx;
-                        &sum;<sub>k=1</sub><sup>n</sup> &omega;<sub>x</sub>(t<sub>k</sub>) &Delta;t</p>
-                </div>
+                \[
+                Roll = \int_{0}^{t} \omega_z \,dt \approx \sum_{k=1}^{n} \omega_z(t_k) \Delta t
+                \]
+                \[
+                Yaw = \int_{0}^{t} \omega_y \,dt \approx \sum_{k=1}^{n} \omega_y(t_k) \Delta t
+                \]
+                \[
+                Pitch = \int_{0}^{t} \omega_x \,dt \approx \sum_{k=1}^{n} \omega_x(t_k) \Delta t
+                \]
+
 
                 <h3>Quaternions</h3>
                 <p>Afin d'obtenir une meilleure précision et fiabilité je me suis naturellement tourné vers les
                     quaternions.</p>
-                <p><strong>[à terminer]</strong></p>
+                <p>
+                    Pour faire ce qui suit je me suis grandement aidé de l'article <em>Quaternion kinematics for
+                        the error-state Kalman filter</em> de Joan Solà.</li> Tout ce que je vais montrer y est exposé
+                    de manière
+                    plus détaillée et approfondie. J'adopterai aussi les mêmes conventions que lui.
+                </p>
+
+                <p>
+                    Pour trouver l'attitute je suis parti d'un vecteur initial (qui sera déterminé lors de
+                    l'initialisation de la fusée,
+                    dans l'état "Au Sol"), que je transforme en quaternion pur, ie avec partie réelle nulle. Je lui
+                    applique ensuite successivement des
+                    opérations de rotations obtenues grâce aux données du gyroscope.
+                    L'objectif est "d'accumuler" les rotations, pour cela j'utiliserai la formule linéarisée de
+                    l'intégration des taux de rotation.
+
+                    \begin{align*}
+                    \textbf{q}_{n+1} &= \textbf{q}_n \otimes \textbf{q} \, \left\{ \boldsymbol{\omega}_n \, \Delta
+                    t\right\} \\
+
+                    &= \textbf{q}_n \otimes exp({\frac{\boldsymbol{\omega}_n \, \Delta t}{2}}) \\
+                    &= \textbf{q}_n \otimes \begin{pmatrix} cos(\frac{\lVert \boldsymbol{\omega}_n\rVert \Delta t}{2}) \\ \frac{\lVert
+                    \boldsymbol{\omega}_n\rVert}{\boldsymbol{\omega}_n} sin(\frac{\lVert \boldsymbol{\omega}_n\rVert
+                    \Delta t}{2})
+                    \end{pmatrix}
+                    \end{align*}
+                    
+                    Avec : <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; \( \boldsymbol{\omega}_n\) : les vitesses de rotation instantanée donnée par le gyroscope. <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; \( \textbf{q}_n\) : le quaternion d'attitude à la n-ième étape.
+                    
+                </p>
+                <p>
+                    On peut ainsi connaitre la quantité de rotation qui a été opérée sur le vecteur initial connu, cela nous permet le connaitre l'attitude 
+                    en permanence.
+
+                </p>
+
+                <p>Voici mes essais et expérimentations avec les quaternions : <a
+                            href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt
+                            GitHub</a></li></p>
 
                 <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
                 <h4>Notes :</h4>
-                <ul>
-                    <li>Voici mes essais et expérimentations avec les quaternions : <a
-                            href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt
-                            GitHub</a></li>
-                    <li>Pour faire ce qui précède je me suis grandement aidé de l'article <em>Quaternion kinematics for
-                            the error-state Kalman filter</em> de Joan Solà.</li>
-                </ul>
+                
             </section>
         </article>
     </main>

@@ -25,6 +25,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 /* Permet un défilement doux quand on clique sur le sommaire */
 html {
     scroll-behavior: smooth;
@@ -75,6 +80,7 @@ header.home-header h1 {
 header.home-header p {
     font-size: 1.2rem;
     color: var(--text-muted);
+    text-align: center;
 }
 
 /* Grille des projets (Accueil) */
@@ -240,6 +246,10 @@ footer {
     margin-top: 60px;
 }
 
+footer p {
+    text-align: center;
+}
+
 /* --- 5. RESPONSIVE MOBILE --- */
 @media (max-width: 850px) {
 
@@ -265,20 +275,25 @@ footer {
 img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px; /* Ajoute des bords légèrement arrondis pour coller à ton design */
-    display: block; /* Évite les petits espaces blancs sous l'image */
+    border-radius: 8px;
+    /* Ajoute des bords légèrement arrondis pour coller à ton design */
+    display: block;
+    /* Évite les petits espaces blancs sous l'image */
 }
 
 /* Style pour les blocs figure */
 .content figure {
-    margin: 40px 0; /* Ajoute de l'espace au-dessus et en dessous */
-    text-align: center; /* Centre l'image et la légende */
+    margin: 40px 0;
+    /* Ajoute de l'espace au-dessus et en dessous */
+    text-align: center;
+    /* Centre l'image et la légende */
 }
 
 /* Style pour la légende */
 .content figcaption {
     margin-top: 12px;
     font-size: 0.9rem;
-    color: var(--text-muted); /* Utilise le gris clair défini dans ton CSS */
+    color: var(--text-muted);
+    /* Utilise le gris clair défini dans ton CSS */
     font-style: italic;
 }
