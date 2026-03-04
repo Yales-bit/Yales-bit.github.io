@@ -31,6 +31,7 @@
                     <li><a href="#flight-computer">Flight Computer</a></li>
                     <li><a href="#code">Code et Algorithmie</a></li>
                     <li><a href="#attitude">Attitude Estimator</a></li>
+                    <li><a href="#recovery">Système de récupération</a></li>
                 </ul>
             </nav>
         </aside>
@@ -38,7 +39,7 @@
         <article class="content">
             <section id="introduction">
                 <h2>1. Introduction</h2>
-                <p><strong>[à faire]</strong></p>
+                <p><strong>[à compléter]</strong></p>
             </section>
 
             <section id="tvc">
@@ -84,7 +85,8 @@
                     faible résistance au cisaillement mais assure que la pièce est bien cylindrique et a les bonnes
                     cotes. Après avoir effectué des tests, j'en ai conclu que ce compromis semble acceptable.
                     Je compte sur le fait que les efforts transmis seront faibles à la fois pour la résistance
-                    des pièces et pour les frottements. Ce choix a été fait pour aller vite et pour simplifier le système
+                    des pièces et pour les frottements. Ce choix a été fait pour aller vite et pour simplifier le
+                    système
                     au maximum.
 
                 </p>
@@ -140,14 +142,14 @@
                     près la différence d'altitude entre deux endroits, dans mon cas le sol et la fusée.</p>
 
                 <h3>3.2 Schématique</h3>
-    
+
                 <figure>
                     <img src="../images/schema_circuit.png" alt="Schéma électrique du Flight Computer">
                     <figcaption>Figure 2 : Schéma de câblage de l'ordinateur de vol.</figcaption>
                 </figure>
 
                 <h3>3.3 Routage</h3>
-                
+
                 <figure>
                     <img src="../images/Routage_PCB.png" alt="Routage du Flight Computer">
                     <figcaption>Figure 3 : Schéma du routage de l'ordinateur de vol.</figcaption>
@@ -213,9 +215,11 @@
                     plus théoriques.
                 </p>
                 <p>
-                    J'ai longtemps bloqué sur la modélisation du système et notamment trouver la fonction de transfert, qui
-                    m'était nécessaire pour appliquer les connaissance d'automatique que j'avais. Je suis ensuite parti sur 
-                    une autre approche, qui, il me semble, s'appelle le remplacement de pôles. 
+                    J'ai longtemps bloqué sur la modélisation du système et notamment trouver la fonction de transfert,
+                    qui
+                    m'était nécessaire pour appliquer les connaissance d'automatique que j'avais. Je suis ensuite parti
+                    sur
+                    une autre approche, qui, il me semble, s'appelle le remplacement de pôles.
                 </p>
 
                 <p>
@@ -227,22 +231,22 @@
                 </p>
 
                 <ul>
-                     <li>Moments dus à la force de poussée :
-                        \begin{align*} 
+                    <li>Moments dus à la force de poussée :
+                        \begin{align*}
                         M_f &= l \cdot F_N \\
                         &= l \cdot F \cdot sin(\alpha)
                         \end{align*}
-                     </li>
+                    </li>
 
-                     <li>Moments dus aux forces aérodynamiques : 
-                    \begin{align*}
-                    M_{aero} &= \vert x_{cg} - x_{cp} \vert \cdot F_{aero}\\
-                            &= \vert x_{cg} - x_{cp} \vert \cdot \frac{1}{2} \rho \, v^2 \, S \, C_x \, sin(\theta)
-                    \end{align*} </li>
-                    
+                    <li>Moments dus aux forces aérodynamiques :
+                        \begin{align*}
+                        M_{aero} &= \vert x_{cg} - x_{cp} \vert \cdot F_{aero}\\
+                        &= \vert x_{cg} - x_{cp} \vert \cdot \frac{1}{2} \rho \, v^2 \, S \, C_x \, sin(\theta)
+                        \end{align*} </li>
+
                 </ul>
                 <ul>
-                    Avec : 
+                    Avec :
                     <li>\(l\) : la distance entre le centre de gravité et le moteur </li>
                     <li> \(\alpha\) : l'angle du moteur (TVC Gimbal) avec le corps de la fusée</li>
                     <li>\(x_{cg}\) : position du centre de gravité </li>
@@ -254,45 +258,64 @@
                     <li>\(\theta\) : l'angle entre la verticale et le corps de la fusée </li>
                 </ul>
                 <p>
-                    Appliquons la 2nde loi de Newton : 
-                    \begin{align} 
+                    Appliquons la 2nde loi de Newton :
+                    \begin{align}
                     \sum M_{cg} &= I \ddot \theta \\
-                     M_F - M_{aero} &= I \ddot \theta 
+                    M_F - M_{aero} &= I \ddot \theta
                     \end{align}
                 </p>
                 <p>
                     Notes : <br>
-                    1) On voit ici que pour une bonne stabilisation passive il faut minimiser la distance \(\vert x_{cg} - x_{cp} \vert\) 
+                    1) On voit ici que pour une bonne stabilisation passive il faut minimiser la distance \(\vert x_{cg}
+                    - x_{cp} \vert\)
                     et maximiser la la distance entre le centre de gravité et le moteur \(l\) <br>
                     2) On cherche \(\alpha\) en fonction de \(\theta\)
                 </p>
 
                 <p>
-                    Pour le correcteur, je vais rester sur un PD pour garder une équation différentielle de degré 2, on pourra toujours par la suite 
+                    Pour le correcteur, je vais rester sur un PD pour garder une équation différentielle de degré 2, on
+                    pourra toujours par la suite
                     rajouter un coef \(K_I = 0,01\) (choisi arbitrairement). <br>
-                    Voici la méthode : je pars de ce que je souhaite, c'est-à-dire que \(\alpha\) soit la commande après régulation. 
+                    Voici la méthode : je pars de ce que je souhaite, c'est-à-dire que \(\alpha\) soit la commande après
+                    régulation.
 
-                    \begin{align*} 
+                    \begin{align*}
                     \alpha &= K_p \, (\theta - consigne) + K_d \, \dot{(\theta - consigne)} \\
                     &= K_p \, (\theta - 0) + K_d \, \dot{(\theta - 0)}\\
                     &= K_p \, \theta + K_d \, \dot \theta
                     \end{align*}
 
                     On cherche \(K_p\) et \(K_d\), on injecte \(\alpha\) dans l'équation obtenue avec le PFD :
-                    \begin{align*} 
+                    \begin{align*}
                     I \, \ddot \theta &= l \, F \, (K_p \, \theta + K_d \, \dot \theta) \\
-                    \Longrightarrow \ddot \theta &= \frac{l \, F \, K_p}{I} \, \theta + \frac{l \, F \, K_d}{I} \, \dot \theta \\
+                    \Longrightarrow \ddot \theta &= \frac{l \, F \, K_p}{I} \, \theta + \frac{l \, F \, K_d}{I} \, \dot
+                    \theta \\
                     \end{align*}
-                    \[\Longrightarrow \ddot \theta - \frac{l \, F \, K_p}{I} \, \theta - \frac{l \, F \, K_d}{I} \, \dot \theta = 0\]
+                    \[\Longrightarrow \ddot \theta - \frac{l \, F \, K_p}{I} \, \theta - \frac{l \, F \, K_d}{I} \, \dot
+                    \theta = 0\]
 
                     On reconnait l'équation différentielle d'un système du 2nd ordre, avec : <br>
                     \[ -\frac{l \, F \, K_d}{I} = 2m\omega_0\] \[ -\frac{l \, F \, K_p}{I} = \omega_0^2\]
                     ce qui donne :<br>
                     \[ K_d = -\frac{2 \, m \, \omega_0}{l \, F}\] \[ K_p = -\frac{I \, m \, \omega_0^2}{l \, F}\]
 
-                    On choisit un coefficient d'amortissement \(m = 0,707\) et une fréquence propre \(\omega_0 = 15 \, rad/s\). <br>
-                    Après calculs, on trouve \( \boldsymbol{K_p = 1,51} \) et \( \boldsymbol{K_d = 0,14} \)
+                    On choisit un coefficient d'amortissement \(m = 0,707\) et une fréquence propre \(\omega_0 = 15 \,
+                    rad/s\). <br>
+                    Après calculs, on trouve \( \boldsymbol{K_p = 1,51} \) et \( \boldsymbol{K_d = 0,14} \) <br>
+                    Ainsi nous obtenons :
+
+                <div
+                    style="border: 1px solid black; padding: 10px; width: fit-content; margin: 0 auto; text-align: center;">
+                    \( \alpha = 1,51 \cdot \theta + 0,14 \cdot \dot \theta \)
+                </div>
+
+
                 </p>
+                <p>
+                    <strong>NB</strong> : les effets aérodynamiques ont été ignorés, les résultats avec la version
+                    linéarisée des forces aéro sont très semblables.
+                </p>
+
             </section>
 
             <section id="attitude">
@@ -343,31 +366,40 @@
                     t\right\} \\
 
                     &= \textbf{q}_n \otimes exp({\frac{\boldsymbol{\omega}_n \, \Delta t}{2}}) \\
-                    &= \textbf{q}_n \otimes \begin{pmatrix} cos(\frac{\lVert \boldsymbol{\omega}_n\rVert \Delta t}{2}) \\ \frac{\lVert
+                    &= \textbf{q}_n \otimes \begin{pmatrix} cos(\frac{\lVert \boldsymbol{\omega}_n\rVert \Delta t}{2})
+                    \\ \frac{\lVert
                     \boldsymbol{\omega}_n\rVert}{\boldsymbol{\omega}_n} sin(\frac{\lVert \boldsymbol{\omega}_n\rVert
                     \Delta t}{2})
                     \end{pmatrix}
                     \end{align*}
-                    
+
                     Avec : <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp; \( \boldsymbol{\omega}_n\) : les vitesses de rotation instantanée donnée par le gyroscope. <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; \( \boldsymbol{\omega}_n\) : les vitesses de rotation instantanée donnée
+                    par le gyroscope. <br>
                     &nbsp;&nbsp;&nbsp;&nbsp; \( \textbf{q}_n\) : le quaternion d'attitude à la n-ième étape.
-                    
+
                 </p>
                 <p>
-                    On peut ainsi connaitre la quantité de rotation qui a été opérée sur le vecteur initial connu, cela nous permet le connaitre l'attitude 
+                    On peut ainsi connaitre la quantité de rotation qui a été opérée sur le vecteur initial connu, cela
+                    nous permet le connaitre l'attitude
                     en permanence.
 
                 </p>
 
                 <p>Voici mes essais et expérimentations avec les quaternions : <a
-                            href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt
-                            GitHub</a></li></p>
+                        href="https://github.com/Yales-bit/Project-attitude-quaternions.git" target="_blank">Dépôt
+                        GitHub</a></li>
+                </p>
 
                 <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
                 <h4>Notes :</h4>
-                
+
+            </section>
+            <section id="recovery">
+                <h2>5. Système de récupération</h2>
+                <p><strong>[à compléter]</strong></p>
+
             </section>
         </article>
     </main>
